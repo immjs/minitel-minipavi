@@ -8,7 +8,7 @@ const http_1 = __importDefault(require("http"));
 const fastify_1 = require("fastify");
 const zod_1 = require("zod");
 const ws_1 = require("ws");
-function createMinipaviHandler(minitelFactory, options) {
+async function createMinipaviHandler(minitelFactory, options) {
     if (!options.port)
         throw new Error('Port is required');
     if (!options.host)
@@ -22,6 +22,7 @@ function createMinipaviHandler(minitelFactory, options) {
                 handler(req, res);
             });
         },
+        withFastify: () => { },
         https: false,
         ...options,
     };
@@ -101,7 +102,6 @@ function createMinipaviHandler(minitelFactory, options) {
             return res
                 .status(400)
                 .send(`Malformed request: ${JSON.stringify(error)}`);
-        console.log('Requested disconnect');
         res.send(JSON.stringify({
             version: fullOptions.version,
             content: '',
@@ -114,6 +114,7 @@ function createMinipaviHandler(minitelFactory, options) {
             },
         }));
     });
+    await fullOptions.withFastify(server);
     return new Promise((resolve) => {
         server.listen({
             port: fullOptions.port,

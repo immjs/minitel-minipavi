@@ -1,4 +1,4 @@
-import { FastifyServerFactory } from 'fastify';
+import { FastifyInstance, FastifyServerFactory } from 'fastify';
 import { WebSocket } from 'ws';
 interface MinipaviHandlerOptions {
     version?: string;
@@ -8,6 +8,7 @@ interface MinipaviHandlerOptions {
     provideDirectUrl?: boolean;
     https?: boolean;
     serverFactory?: FastifyServerFactory;
+    withFastify?: (server: FastifyInstance) => any;
 }
 export declare function createMinipaviHandler(minitelFactory: (ws: WebSocket) => any, options: MinipaviHandlerOptions): Promise<void>;
 export {};
