@@ -1,0 +1,35 @@
+{
+  "name": "minitel-minipavi",
+  "version": "1.0.0",
+  "description": "An adaptor between Minipavi and the JS minitel ecosystem",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/immjs/minitel-minipavi.git"
+  },
+  "keywords": [
+    "minitel",
+    "minipavi"
+  ],
+  "author": "Juliette WANG <immjs>",
+  "license": "Hippocratic-2.1",
+  "bugs": {
+    "url": "https://github.com/immjs/minitel-minipavi/issues"
+  },
+  "homepage": "https://github.com/immjs/minitel-minipavi#readme",
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "minitel-standalone": "^1.9.4",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.11",
+    "prettier": "3.3.3",
+    "typescript": "^5.5.4",
+    "ws-duplex-bridge": "^1.0.1"
+  }
+}
