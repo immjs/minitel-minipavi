@@ -1,6 +1,6 @@
 {
   "name": "minitel-minipavi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An adaptor between Minipavi and the JS minitel ecosystem",
   "main": "dist/index.js",
   "scripts": {
