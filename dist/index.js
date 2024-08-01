@@ -81,7 +81,7 @@ async function createMinipaviHandler(minitelFactory, options) {
             content: '',
             context: '',
             echo: 'off',
-            next: `http://${req.hostname}/disconnect`,
+            next: `${fullOptions.https ? 'https' : 'http'}://${req.hostname}/disconnect`,
             directcall: 'no',
             COMMAND: {
                 name: 'connectToWs',
@@ -107,7 +107,7 @@ async function createMinipaviHandler(minitelFactory, options) {
             content: '',
             context: '',
             echo: 'off',
-            next: `http://${req.hostname}/disconnect`,
+            next: `${fullOptions.https ? 'https' : 'http'}://${req.hostname}/disconnect`,
             directcall: 'no',
             COMMAND: {
                 name: 'libCnx',

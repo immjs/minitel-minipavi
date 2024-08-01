@@ -99,7 +99,7 @@ export async function createMinipaviHandler(
         content: '',
         context: '',
         echo: 'off',
-        next: `http://${req.hostname}/disconnect`,
+        next: `${fullOptions.https ? 'https' : 'http'}://${req.hostname}/disconnect`,
         directcall: 'no',
         COMMAND: {
           name: 'connectToWs',
@@ -130,7 +130,7 @@ export async function createMinipaviHandler(
         content: '',
         context: '',
         echo: 'off',
-        next: `http://${req.hostname}/disconnect`,
+        next: `${fullOptions.https ? 'https' : 'http'}://${req.hostname}/disconnect`,
         directcall: 'no',
         COMMAND: {
           name: 'libCnx',
