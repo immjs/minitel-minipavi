@@ -4,7 +4,9 @@
   "description": "An adaptor between Minipavi and the JS minitel ecosystem",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",
