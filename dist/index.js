@@ -34,7 +34,7 @@ export async function createMinipaviHandler(minitelFactory, options) {
             uniqueId: z.string().regex(/^\d+$/g),
             remoteAddr: z.string(),
             typesocket: z.enum(['websocketssl', 'websocket', 'other']),
-            versionminitel: z.string().regex(/^\x01.{3}\x04$/g),
+            versionminitel: z.string().regex(/^(\x01.{3}\x04|.{3})$/g),
             content: z.array(z.string()),
             context: z.any(),
             fctn: z.enum([
