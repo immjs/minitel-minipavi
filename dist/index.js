@@ -1,14 +1,8 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createMinipaviHandler = createMinipaviHandler;
-const http_1 = __importDefault(require("http"));
-const fastify_1 = require("fastify");
-const zod_1 = require("zod");
-const ws_1 = require("ws");
-async function createMinipaviHandler(minitelFactory, options) {
+import http from 'http';
+import { fastify } from 'fastify';
+import { z } from 'zod';
+import { WebSocketServer } from 'ws';
+export async function createMinipaviHandler(minitelFactory, options) {
     if (!options.port)
         throw new Error('Port is required');
     if (!options.host)
@@ -18,7 +12,7 @@ async function createMinipaviHandler(minitelFactory, options) {
         providePavi: false,
         provideDirectUrl: false,
         serverFactory: (handler, opts) => {
-            return http_1.default.createServer((req, res) => {
+            return http.createServer((req, res) => {
                 handler(req, res);
             });
         },
@@ -26,24 +20,24 @@ async function createMinipaviHandler(minitelFactory, options) {
         https: false,
         ...options,
     };
-    const server = (0, fastify_1.fastify)({
+    const server = fastify({
         serverFactory: (...args) => {
             const server = fullOptions.serverFactory(...args);
-            const wss = new ws_1.WebSocketServer({ server });
+            const wss = new WebSocketServer({ server });
             wss.on('connection', minitelFactory);
             return server;
         },
     });
-    const paviSchema = zod_1.z.object({
-        PAVI: zod_1.z.object({
-            version: zod_1.z.string().regex(/^(\d+\.)*\d+$/g),
-            uniqueId: zod_1.z.string().regex(/^\d+$/g),
-            remoteAddr: zod_1.z.string(),
-            typesocket: zod_1.z.enum(['websocketssl', 'websocket', 'other']),
-            versionminitel: zod_1.z.string().regex(/^\x01.{3}\x04$/g),
-            content: zod_1.z.array(zod_1.z.string()),
-            context: zod_1.z.any(),
-            fctn: zod_1.z.enum([
+    const paviSchema = z.object({
+        PAVI: z.object({
+            version: z.string().regex(/^(\d+\.)*\d+$/g),
+            uniqueId: z.string().regex(/^\d+$/g),
+            remoteAddr: z.string(),
+            typesocket: z.enum(['websocketssl', 'websocket', 'other']),
+            versionminitel: z.string().regex(/^\x01.{3}\x04$/g),
+            content: z.array(z.string()),
+            context: z.any(),
+            fctn: z.enum([
                 'ENVOI',
                 'SUITE',
                 'RETOUR',
@@ -62,7 +56,7 @@ async function createMinipaviHandler(minitelFactory, options) {
                 'BGCALL-SIMU',
             ]),
         }),
-        URLPARAMS: zod_1.z.record(zod_1.z.string(), zod_1.z.string()).optional(),
+        URLPARAMS: z.record(z.string(), z.string()).optional(),
     });
     server.post('/', (req, res) => {
         const { success, data, error } = paviSchema.safeParse(req.body);

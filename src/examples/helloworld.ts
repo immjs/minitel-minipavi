@@ -1,6 +1,6 @@
 import { Minitel, TextNode } from 'minitel-standalone';
 import { DuplexBridge } from 'ws-duplex-bridge';
-import { createMinipaviHandler } from '..';
+import { createMinipaviHandler } from '../index.js';
 
 createMinipaviHandler(
   (ws) => {
