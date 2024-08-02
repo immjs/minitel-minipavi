@@ -24,7 +24,7 @@
   "homepage": "https://github.com/immjs/minitel-minipavi#readme",
   "dependencies": {
     "fastify": "^4.28.1",
-    "minitel-standalone": "^1.9.4",
+    "minitel-standalone": "^1.9.6",
     "ws": "^8.18.0",
     "zod": "^3.23.8"
   },
