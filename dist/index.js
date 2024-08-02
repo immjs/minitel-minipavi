@@ -87,11 +87,11 @@ async function createMinipaviHandler(minitelFactory, options) {
                 name: 'connectToWs',
                 param: {
                     key: 'Same host <https://npmjs.com/packages/minitel-minipavi>',
-                    host: req.hostname,
+                    host: fullOptions.https ? `ssl://${req.hostname}:443` : req.hostname,
                     path: `/websocket${newParams.toString()}`,
                     echo: 'off',
                     case: 'lower',
-                    proto: fullOptions.https ? 'wss' : 'ws',
+                    proto: '',
                 },
             },
         }));
