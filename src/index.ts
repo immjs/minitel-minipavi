@@ -48,31 +48,14 @@ export async function createMinipaviHandler(
 
   const paviSchema = z.object({
     PAVI: z.object({
-      version: z.string().regex(/^(\d+\.)*\d+$/g),
-      uniqueId: z.string().regex(/^\d+$/g),
+      version: z.string(),
+      uniqueId: z.string(),
       remoteAddr: z.string(),
-      typesocket: z.enum(['websocketssl', 'websocket', 'other']),
-      versionminitel: z.string().regex(/^(\x01.{3}\x04|.{3})$/g),
+      typesocket: z.string(), // you didn have to turn your vest like that lol
+      versionminitel: z.string(),
       content: z.array(z.string()),
       context: z.any(),
-      fctn: z.enum([
-        'ENVOI',
-        'SUITE',
-        'RETOUR',
-        'ANNULATION',
-        'CORRECTION',
-        'GUIDE',
-        'REPETITION',
-        'SOMMAIRE',
-        'CNX',
-        'FIN',
-        'DIRECT',
-        'DIRECTCNX',
-        'DIRECTCALLFAILED',
-        'DIRECTCALLENDED',
-        'BGCALL',
-        'BGCALL-SIMU',
-      ]),
+      fctn: z.string(),
     }),
     URLPARAMS: z.record(z.string(), z.string()).optional(),
   });
