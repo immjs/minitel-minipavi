@@ -23,8 +23,12 @@ export async function createMinipaviHandler(minitelFactory, options) {
     const server = fastify({
         serverFactory: (...args) => {
             const server = fullOptions.serverFactory(...args);
-            const wss = new WebSocketServer({ server });
-            wss.on('connection', minitelFactory);
+            const wss = new WebSocketServer({ noServer: true });
+            server.on('upgrade', function upgrade(request, socket, head) {
+                wss.handleUpgrade(request, socket, head, function done(ws) {
+                    minitelFactory(ws, request);
+                });
+            });
             return server;
         },
     });

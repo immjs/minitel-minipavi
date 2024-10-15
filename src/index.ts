@@ -1,4 +1,4 @@
-import http from 'http';
+import http, { IncomingMessage } from 'http';
 import { fastify, FastifyInstance, FastifyServerFactory } from 'fastify';
 import { z } from 'zod';
 import { WebSocketServer, WebSocket } from 'ws';
@@ -15,7 +15,7 @@ interface MinipaviHandlerOptions {
 }
 
 export async function createMinipaviHandler(
-  minitelFactory: (ws: WebSocket) => any,
+  minitelFactory: (ws: WebSocket, request: IncomingMessage) => any,
   options: MinipaviHandlerOptions,
 ) {
   if (!options.port) throw new Error('Port is required');
@@ -38,9 +38,13 @@ export async function createMinipaviHandler(
   const server = fastify({
     serverFactory: (...args) => {
       const server = fullOptions.serverFactory(...args);
-      const wss = new WebSocketServer({ server });
+      const wss = new WebSocketServer({ noServer: true });
 
-      wss.on('connection', minitelFactory);
+      server.on('upgrade', function upgrade(request, socket, head) {
+        wss.handleUpgrade(request, socket, head, function done(ws) {
+          minitelFactory(ws, request);
+        });
+      });
 
       return server;
     },
